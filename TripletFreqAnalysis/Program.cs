@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 
 namespace TripletFreqAnalysis
 {
@@ -25,16 +27,23 @@ namespace TripletFreqAnalysis
 
             counter.ReadFileAsync(path);
 
-            var groups = counter.CountTriplets()
-                .Where(str => str.All(ch => char.IsLetter(ch)))
-                .GroupBy(str => str);
+            counter.LaunchCount();
+
+            List<KeyValuePair<string, int>> myList = TripletCounter.AllTripletsCounted.ToList();
+
+            myList.Sort(
+                delegate (KeyValuePair<string, int> pair1,
+                KeyValuePair<string, int> pair2)
+                {
+                    return pair2.Value.CompareTo(pair1.Value);
+                }
+            );
 
             Console.WriteLine();
             Console.WriteLine(string.Join
                 (
                     Environment.NewLine,
-                    groups.OrderByDescending(gr => gr.Count())
-                    .Take(10).Select(gr => $"\"{gr.Key}\" occurs {gr.Count()} times")
+                    myList.Take(10).Select(gr => $"\"{gr.Key}\" occurs {gr.Value} times")
                 ));
 
             stopWatch.Stop();
