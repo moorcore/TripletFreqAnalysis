@@ -11,12 +11,12 @@ namespace TripletFreqAnalysis
 {
     public class TripletCounter
     {
-        public static ConcurrentDictionary<string, int> AllTripletsCounted = 
+        public ConcurrentDictionary<string, int> AllTripletsCounted = 
             new ConcurrentDictionary<string, int>();
 
         List<string> splittedText = new List<string>();
 
-        Regex RgxUrl = new Regex("[^a-zA-ZА-Яа-я]");
+        Regex RgxUrl = new Regex("[^a-zа-я]");
 
         public void ReadFileAsync(string inputPath)
         {

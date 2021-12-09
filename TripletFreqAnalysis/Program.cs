@@ -29,7 +29,7 @@ namespace TripletFreqAnalysis
 
             counter.LaunchCount();
 
-            List<KeyValuePair<string, int>> myList = TripletCounter.AllTripletsCounted.ToList();
+            List<KeyValuePair<string, int>> myList = counter.AllTripletsCounted.ToList();
 
             myList.Sort(
                 delegate (KeyValuePair<string, int> pair1,
